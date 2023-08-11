@@ -45,6 +45,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=128)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
     about = models.TextField(blank=True, null=True)
+    trxn_id = models.CharField(max_length=50, null=True, blank=True)
 
     email = models.EmailField(_("email address"), unique=True)
     phone_number = models.CharField(max_length=20)

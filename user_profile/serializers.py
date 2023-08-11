@@ -24,10 +24,23 @@ class CustomRegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = hide_db_for_registration.objects.create(
-            mobile_number=validated_data['mobile_number'],
+            phone_number=validated_data['phone_number'],
             email=validated_data['email'],
             username=validated_data['username'],
             otp=validated_data["otp"],
         )
         user.save()
         return user
+    
+
+class LoginWithMobileSerializer(serializers.Serializer):
+    phone_number = serializers.CharField(max_length=128, required=False)
+    otp = serializers.CharField(max_length=6, required=False, allow_blank=True)
+    token = serializers.CharField(max_length=255, read_only=True)
+
+
+class LoginWithEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=False)
+    otp = serializers.CharField(max_length=6, required=False)
+    token = serializers.CharField(max_length=255, read_only=True)
+    
